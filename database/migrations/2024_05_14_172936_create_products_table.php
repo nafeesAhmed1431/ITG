@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->integer('product_no')->nullable();
+            $table->string('name');
             $table->text('description')->nullable();
             $table->string('unit');
+            $table->double('purchase_rate');
             $table->double('sale_rate');
             $table->double('sale_rate_2');
             $table->double('sale_rate_3');

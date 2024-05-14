@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateProduct;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -27,9 +28,40 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateProduct $request)
     {
-        //
+        /*        
+        [product_name] => 
+        [product_unit] => 
+        [product_number] => 
+        [purchase_rate] => 
+        [sale_rate] => 
+        [sale_rate_2] => 
+        [sale_rate_3] => 
+        [stock_alert] => 
+        [group] => 
+        [product_location] => 
+        [description] =>         
+        */ 
+
+        $product = $request->validated();
+
+        $res = Product::create([
+            'product_no' => $product['product_number'],
+            'name' => $product['product_name'],
+            'description' => $product['description'],
+            'unit' => $product['product_unit'],
+            'purchase_rate' => $product['purchase_rate'],
+            'sale_rate' => $product['sale_rate'],
+            'sale_rate_2' => $product['sale_rate_2'],
+            'sale_rate_3' => $product['sale_rate_3'],
+            'stock_alert' => $product['stock_alert'],
+            'group' => $product['group'],
+            'lock' => $product['product_lock'] == "on" ? 1 : 0,
+            'location' => $product['product_location'],
+        ]);
+
+        return response()->json(['status' => true], 201);
     }
 
     /**

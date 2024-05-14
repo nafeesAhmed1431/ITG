@@ -65,6 +65,7 @@
     <!-- Custom js for this page-->
     <script src="{{url('assets/js/jquery.cookie.js')}}"></script>
     <script src="{{url('assets/js/dashboard.js')}}"></script>
+    <script src="{{url('assets/js/sweetalert.min.js')}}"></script>
     <!-- <script src="assets/js/Chart.roundedBarCharts.js"></script> -->
     <!-- End custom js for this page-->
     @yield('script')
