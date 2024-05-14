@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title',"Sales Index")
+@section('title','Products/Create')
 @section('content')
 
 @endsection

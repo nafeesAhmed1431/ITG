@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SaleController;
 use Illuminate\Support\Facades\Route;
@@ -21,3 +22,5 @@ Route::get('/purchase/return', [PurchaseController::class, 'return'])->name('pur
 Route::get('/sale', [SaleController::class, 'index'])->name('sale.index');
 Route::get('/sale/create', [SaleController::class, 'create'])->name('sale.create');
 Route::get('/sale/return', [SaleController::class, 'return'])->name('sale.return');
+
+Route::resource('product', ProductController::class);
