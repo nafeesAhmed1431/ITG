@@ -1,12 +1,52 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
         <li class="nav-item">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="{{url('')}}">
                 <i class="icon-grid menu-icon"></i>
                 <span class="menu-title">Dashboard</span>
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#user-dropdown">
+                <i class="icon-layout menu-icon"></i>
+                <span class="menu-title">User</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="user-dropdown">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="{{route('sale.index')}}">All</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#sale-dropdown">
+                <i class="icon-layout menu-icon"></i>
+                <span class="menu-title">Sale</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="sale-dropdown">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="{{route('sale.index')}}">All</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{route('sale.create')}}">Create</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{route('sale.return')}}">Returns</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#purchase-dropdown">
+                <i class="icon-layout menu-icon"></i>
+                <span class="menu-title">Purchase</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="purchase-dropdown">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="{{route('purchase.index')}}">All</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{route('purchase.create')}}">Create</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{route('purchase.return')}}">Returns</a></li>
+                </ul>
+            </div>
+        </li>
+        <!-- <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                 <i class="icon-layout menu-icon"></i>
                 <span class="menu-title">UI Elements</span>
@@ -99,6 +139,6 @@
                 <i class="icon-paper menu-icon"></i>
                 <span class="menu-title">Documentation</span>
             </a>
-        </li>
+        </li> -->
     </ul>
 </nav>
