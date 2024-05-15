@@ -8,7 +8,6 @@
                 <h4 class="card-title">Edit Product</h4>
                 <p class="card-description"> Enter details to create new product</p>
                 <form id="edit_product_form">
-                    @CSRF
                     @method('PUT')
                     <div class="row">
                         <div class="col-md-4">
@@ -111,9 +110,12 @@
         let payload = new FormData(this);
         // Change method to PUT
         $.ajax({
-            url: "{{route('product.update',['product'=>$product->id])}}",
+            headers: {
+                'X-CSRF-TOKEN': csrf
+            },
+            url: "{{ route('product.update', ['product' => $product->id]) }}",
             dataType: 'json',
-            method: 'PUT',
+            method: 'POST',
             processData: false,
             contentType: false,
             data: payload,
@@ -122,14 +124,11 @@
                     swal({
                         title: 'Success',
                         text: 'Product has been updated successfully',
-                        showConfirmButton: false,
+                        showConfirmButton: true,
                         showCancelButton: false,
-                        toast: true,
-                        position: "top",
-                        timer: 2000,
                         icon: "success"
                     }).then(res => {
-                        location.href = "{{route('product.index')}}";
+                        location.href = "{{ route('product.index') }}";
                     });
                 }
             },
@@ -141,6 +140,7 @@
                 });
             },
         });
+
     });
 </script>
 

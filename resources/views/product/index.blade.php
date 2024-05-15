@@ -14,6 +14,7 @@
                         <thead>
                             <tr>
                                 <th>Number</th>
+                                <th>Name</th>
                                 <th>Unit</th>
                                 <th>Sale Rate</th>
                                 <th>Stock Alert</th>
@@ -27,6 +28,7 @@
                             @forelse($products as $product)
                             <tr>
                                 <td>{{$product->product_no}}</td>
+                                <td>{{$product->name}}</td>
                                 <td>{{$product->unit}}</td>
                                 <td>
                                     {{$product->sale_rate}}
@@ -42,7 +44,10 @@
                                 <td>
                                     <a href="{{route('product.show',['product'=>$product->id])}}"> <span class="badge bg-info"><i class="fa fa-eye"></i> View</span></a>
                                     <a href="{{route('product.edit',['product'=>$product->id])}}"> <span class="badge bg-primary"><i class="fa fa-edit"></i> Edit</span></a>
-                                    <a href="{{route('product.delete',['product'=>$product->id])}}"> <span class="badge bg-danger"><i class="fa fa-trash"></i> Delete</span></a>
+                                    <a href="{{ route('product.delete', ['id' => $product->id]) }}">
+                                        <span class="badge bg-danger"><i class="fa fa-trash"></i> Delete</span>
+                                    </a>
+
                                 </td>
                             </tr>
                             @empty

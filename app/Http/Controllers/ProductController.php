@@ -85,9 +85,24 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(EditProduct $product)
+    public function update(Product $product, EditProduct $req)
     {
-        $this->preety_print($product);
+        $data = $req->validated();
+        $lock = isset($data['product_lock']) && $data['product_lock'] == "on" ? 1 : 0;
+        $product->product_no = $data['product_number'];
+        $product->name = $data['product_name'];
+        $product->description = $data['description'];
+        $product->unit = $data['product_unit'];
+        $product->purchase_rate = $data['purchase_rate'];
+        $product->sale_rate = $data['sale_rate'];
+        $product->sale_rate_2 = $data['sale_rate_2'];
+        $product->sale_rate_3 = $data['sale_rate_3'];
+        $product->stock_alert = $data['stock_alert'];
+        $product->group = $data['group'];
+        $product->lock = $lock;
+        $product->location = $data['product_location'];
+        $res = $product->save();
+        return response()->json(['status' => $res], 200);
     }
 
     /**
@@ -96,5 +111,12 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function delete(string $id)
+    {
+        $product = Product::findOrFail($id);
+        $product->delete();
+        return redirect()->route('product.index')->with('success', 'Product Deleted Successfully');
     }
 }

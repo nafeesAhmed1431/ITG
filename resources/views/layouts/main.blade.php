@@ -48,6 +48,9 @@
     </div>
     <!-- container-scroller -->
     <!-- plugins:js -->
+    <script>
+        let csrf = $('meta[name="csrf-token"]').attr('content');
+    </script>
     <script src="{{url('assets/vendors/js/vendor.bundle.base.js')}}"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
