@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="{{url('assets/css/style.css')}}">
     <!-- endinject -->
     <link rel="shortcut icon" href="assets/images/favicon.png" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="{{url('assets/js/jquery.min.js')}}"></script>
 </head>
 
@@ -52,7 +53,7 @@
     <!-- Plugin js for this page -->
     <script src="{{url('assets/vendors/chart.js/chart.umd.js')}}"></script>
     <script src="{{url('assets/vendors/datatables.net/jquery.dataTables.js')}}"></script>
-    
+
     <script src="{{url('assets/vendors/datatables.net-bs5/dataTables.bootstrap5.js')}}"></script>
     <script src="{{url('assets/js/dataTables.select.min.js')}}"></script>
     <!-- End plugin js for this page -->

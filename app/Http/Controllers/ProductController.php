@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateProduct;
+use App\Http\Requests\EditProduct;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Symfony\Component\VarDumper\Caster\PdoCaster;
 
 class ProductController extends Controller
 {
@@ -42,7 +44,7 @@ class ProductController extends Controller
         [group] => 
         [product_location] => 
         [description] =>         
-        */ 
+        */
 
         $product = $request->validated();
 
@@ -75,17 +77,17 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Product $product)
     {
-        //
+        return view('product.edit', compact('product'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(EditProduct $product)
     {
-        //
+        $this->preety_print($product);
     }
 
     /**

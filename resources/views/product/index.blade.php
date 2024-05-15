@@ -42,7 +42,7 @@
                                 <td>
                                     <a href="{{route('product.show',['product'=>$product->id])}}"> <span class="badge bg-info"><i class="fa fa-eye"></i> View</span></a>
                                     <a href="{{route('product.edit',['product'=>$product->id])}}"> <span class="badge bg-primary"><i class="fa fa-edit"></i> Edit</span></a>
-                                    <a href="{{route('product.destroy',['product'=>$product->id])}}"> <span class="badge bg-danger"><i class="fa fa-trash"></i> Delete</span></a>
+                                    <a href="{{route('product.delete',['product'=>$product->id])}}"> <span class="badge bg-danger"><i class="fa fa-trash"></i> Delete</span></a>
                                 </td>
                             </tr>
                             @empty
