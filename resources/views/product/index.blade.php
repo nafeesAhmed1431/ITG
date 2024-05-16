@@ -39,7 +39,7 @@
                                 </td>
                                 <td>{{$product->stock_alert}}</td>
                                 <td>{{$product->group}}</td>
-                                <td>{{$product->lock}}</td>
+                                <td><span class="badge bg-{{$product->lock ? 'danger' : 'success'}}">{{$product->lock ? "Yes" : "No" }}</span> </td>
                                 <td>{{$product->location}}</td>
                                 <td>
                                     <a href="{{route('product.show',['product'=>$product->id])}}"> <span class="badge bg-info"><i class="fa fa-eye"></i> View</span></a>
@@ -52,7 +52,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="8" class="text-center"><span class="text-danger">No Products Found.</span></td>
+                                <td colspan="9" class="text-center"><span class="badge badge-warning"> <i class="fa fa-warning"></i> No Products Found.</span></td>
                             </tr>
                             @endforelse
                         </tbody>

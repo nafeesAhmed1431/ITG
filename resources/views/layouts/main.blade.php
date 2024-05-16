@@ -62,7 +62,7 @@
     <!-- End plugin js for this page -->
     <!-- inject:js -->
     <script src="{{url('assets/js/off-canvas.js')}}"></script>
-    <script src="{{url('assets/js/template.js')}}"></script>
+    <!-- <script src="{{url('assets/js/template.js')}}"></script> -->
     <script src="{{url('assets/js/settings.js')}}"></script>
     <script src="{{url('assets/js/todolist.js')}}"></script>
     <!-- endinject -->

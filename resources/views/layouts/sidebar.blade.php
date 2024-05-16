@@ -1,6 +1,14 @@
+<?php
+$segment = request()->segment(1);
+$segment_2 = request()->segment(2);
+$product = ['product'];
+
+
+?>
+
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
-        <li class="nav-item">
+        <li class="nav-item {{$segment == '' ? 'active' : ''}}">
             <a class="nav-link" href="{{url('')}}">
                 <i class="icon-grid menu-icon"></i>
                 <span class="menu-title">Dashboard</span>
@@ -18,13 +26,13 @@
                 </ul>
             </div>
         </li>
-        <li class="nav-item">
+        <li class="nav-item {{in_array($segment,$product) ? 'active' : ''}}">
             <a class="nav-link" data-bs-toggle="collapse" href="#product-dropdown">
                 <i class="icon-layout menu-icon"></i>
                 <span class="menu-title">Products</span>
                 <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="product-dropdown">
+            <div class="collapse {{in_array($segment,$product) ? 'show' : ''}}" id="product-dropdown">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a class="nav-link" href="{{route('product.index')}}">All</a></li>
                     <li class="nav-item"> <a class="nav-link" href="{{route('product.create')}}">Create</a></li>

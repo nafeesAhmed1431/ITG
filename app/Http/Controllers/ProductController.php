@@ -48,6 +48,7 @@ class ProductController extends Controller
 
         $product = $request->validated();
 
+        $lock = isset($data['product_lock']) && $data['product_lock'] == "on" ? 1 : 0;
         $res = Product::create([
             'product_no' => $product['product_number'],
             'name' => $product['product_name'],
@@ -59,7 +60,7 @@ class ProductController extends Controller
             'sale_rate_3' => $product['sale_rate_3'],
             'stock_alert' => $product['stock_alert'],
             'group' => $product['group'],
-            'lock' => $product['product_lock'] == "on" ? 1 : 0,
+            'lock' => $lock,
             'location' => $product['product_location'],
         ]);
 

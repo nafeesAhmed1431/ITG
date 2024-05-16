@@ -128,7 +128,9 @@
                         icon: "success"
                     }).then(res => {
                         if (confirm('Do you like to add more?')) {
-                            location.reload();
+                            $('#product_form')[0].reset();
+                        } else {
+                            location.href = "{{route('product.index')}}";
                         }
                     });
                 }
