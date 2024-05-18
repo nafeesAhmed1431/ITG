@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SaleController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -25,3 +26,5 @@ Route::get('/sale/return', [SaleController::class, 'return'])->name('sale.return
 
 Route::get('product/{id}/delete', [ProductController::class, 'delete'])->name('product.delete');
 Route::resource('product', ProductController::class);
+
+Route::get('search/customer', [SearchController::class,'customer'])->name('search.customer');

@@ -23,6 +23,9 @@
     <link rel="stylesheet" href="{{url('assets/css/style.css')}}">
     <!-- endinject -->
     <link rel="shortcut icon" href="assets/images/favicon.png" />
+
+    @yield('styles')
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="{{url('assets/js/jquery.min.js')}}"></script>
 </head>
