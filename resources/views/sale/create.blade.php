@@ -31,10 +31,26 @@
                                 <input type="text" class="form-control" id="sale_title" name="sale_title" placeholder="Sale Title">
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="sale_customer">Customer <span class="text-danger">*</span> </label>
                                 <select name="sale_customer" id="sale_customer" class="form-select"></select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="sale_account">Account <span class="text-danger">*</span> </label>
+                                <select name="sale_account" id="sale_account" class="form-select"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="sale_product">Product <span class="text-danger">*</span> </label>
+                                <select id="sale_product" class="form-select"></select>
                             </div>
                         </div>
                     </div>
@@ -58,6 +74,60 @@
         allowClear: true,
         ajax: {
             url: '{{route("search.customer")}}',
+            dataType: 'json',
+            delay: 250,
+            data: params => {
+                return {
+                    search_query: params.term
+                };
+            },
+            processResults: function(data) {
+                return {
+                    results: $.map(data, function(item) {
+                        return {
+                            id: item.id,
+                            text: item.name
+                        };
+                    })
+                };
+            },
+            cache: true
+        },
+        minimumInputLength: 1,
+    });
+
+    $('#sale_account').select2({
+        placeholder: 'Search Account',
+        allowClear: true,
+        ajax: {
+            url: '{{route("search.account")}}',
+            dataType: 'json',
+            delay: 250,
+            data: params => {
+                return {
+                    search_query: params.term
+                };
+            },
+            processResults: function(data) {
+                return {
+                    results: $.map(data, function(item) {
+                        return {
+                            id: item.id,
+                            text: item.name
+                        };
+                    })
+                };
+            },
+            cache: true
+        },
+        minimumInputLength: 1,
+    });
+    
+    $('#sale_account').select2({
+        placeholder: 'Search Account',
+        allowClear: true,
+        ajax: {
+            url: '{{route("search.account")}}',
             dataType: 'json',
             delay: 250,
             data: params => {

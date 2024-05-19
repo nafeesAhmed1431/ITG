@@ -27,4 +27,6 @@ Route::get('/sale/return', [SaleController::class, 'return'])->name('sale.return
 Route::get('product/{id}/delete', [ProductController::class, 'delete'])->name('product.delete');
 Route::resource('product', ProductController::class);
 
+Route::get('search/product', [SearchController::class,'product'])->name('search.product');
+Route::get('search/account', [SearchController::class,'account'])->name('search.account');
 Route::get('search/customer', [SearchController::class,'customer'])->name('search.customer');

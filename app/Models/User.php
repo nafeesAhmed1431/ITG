@@ -44,4 +44,11 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    const ROLE_SUPER_ADMIN = 1;
+    const ROLE_ADMIN = 2;
+    const ROLE_CASHIER = 3;
+    const ROLE_PURCHASER = 4;
+    const ROLE_USER = 5;
+    const ROLE_CUSTOMER = 6;
 }
