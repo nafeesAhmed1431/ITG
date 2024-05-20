@@ -13,15 +13,16 @@ return new class extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('customer_id');
-            $table->unsignedBigInteger('created_by');
-            $table->decimal('total', 10, 2);
-            $table->decimal('discount', 10, 2)->nullable();
-            $table->string('cash_received');
-            $table->string('cash_pending')->default(0);
-            $table->string('status');
-            $table->integer('uat')->nullable();
-            $table->string('title')->nullable();
+            $table->string('sale_no');
+            $table->integer('account_no');
+            $table->text('account_desc')->nullable();
+            $table->integer('sale_account_no');
+            $table->decimal('total', 10, 2)->default(0);
+            $table->decimal('discount', 10, 2)->default(0);
+            $table->decimal('vat_amount', 10, 2)->default(0);
+            $table->integer('customer_id');
+            $table->string('customer_name');
+            $table->integer('created_by');
             $table->timestamps();
         });
     }
