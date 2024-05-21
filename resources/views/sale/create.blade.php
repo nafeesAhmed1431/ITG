@@ -351,7 +351,15 @@
             processData: false,
             contentType: false,
             data: new FormData(this),
-            success: res => {},
+            success: res => {
+                if (res.status) {
+                    alert(res.message);
+                    if (confirm('Do you like to add more ?')) {
+                        location.refresh;
+                    }
+                    location.href = "{{route('sale.index')}}";
+                }
+            },
             error: res => {}
         });
     });

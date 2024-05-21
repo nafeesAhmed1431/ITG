@@ -17,9 +17,8 @@
                                 <th>Customer</th>
                                 <th>Title</th>
                                 <th>Discount</th>
-                                <th>Status</th>
                                 <th>Date-Time</th>
-                                <th>Total-Qty</th>
+                                <th>Total</th>
                                 <th>Sale By</th>
                                 <th>Actions</th>
                             </tr>
@@ -27,6 +26,14 @@
                         <tbody>
                             @forelse($sales as $sale)
                             <tr>
+                                <td>{{$sale->sale_no}}</td>
+                                <td>{{$sale->customer_name}}</td>
+                                <td>Sale Title</td>
+                                <td>{{$sale->discount}}</td>
+                                <td>{{$sale->created_at}}</td>
+                                <td>{{$sale->total}}</td>
+                                <td>Admin</td>
+                                <td>Actions</td>
                             </tr>
                             @empty
                             <tr>

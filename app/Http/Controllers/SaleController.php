@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Invoice_items;
 use App\Models\Sale;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,7 @@ class SaleController extends Controller
     public function index()
     {
         $sales = Sale::latest()->get();
-        return view('sale.index',compact('sales'));
+        return view('sale.index', compact('sales'));
     }
 
     /**
@@ -29,68 +30,64 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
-        /**
-         * 
-         * 
-         * Array
-(
-    [_token] => m3LEUQ6r9yoWrcZECWWJhVtwlGLs9oYmCdkFlpdY
-    [sale_number] => 123
-    [sale_title] => sa
-    [sale_date] => 2024-05-21
-    [sale_customer] => 4
-    [sale_customer_name] => Customer 1
-    [account_no] => 4
-    [sale_account_name] => Sales Revenue
-    [item_id] => Array
-        (
-            [0] => 3
-            [1] => 5
-        )
+        // Validate the request data here
 
-    [item_number] => Array
-        (
-            [0] => 3
-            [1] => 5
-        )
-
-    [qty] => Array
-        (
-            [0] => 10
-            [1] => 15
-        )
-
-    [rate] => Array
-        (
-            [0] => 18
-            [1] => 35
-        )
-
-    [discount] => Array
-        (
-            [0] => 10
-            [1] => 15
-        )
-
-    [total] => Array
-        (
-            [0] => 162
-            [1] => 446.25
-        )
-
-)
-
-         * 
-         * */ 
-
-        //  `sale_no`, `account_no`, `account_desc`, `sale_account_no`, `total`, `discount`, `vat_amount`, `customer_id`, `customer_name`, `created_by`,
+        // Insert into the sales table
         $sale = Sale::create([
             'sale_no' => $request->sale_number,
-            'account_no' => $request->account_no,
+            'account_no' => $request->sale_account,
             'account_desc' => $request->sale_account_name,
-            'sale_account_no' => $request->account_no,
+            'sale_account_no' => $request->sale_account,
+            'total' => 0, // Initially 0, will be calculated later
+            'discount' => 0, // Initially 0, will be calculated later
+            'vat_amount' => 0, // Initially 0, will be calculated later
+            'customer_id' => $request->sale_customer,
+            'customer_name' => $request->sale_customer_name,
+            'created_by' => 1
         ]);
+
+        $total = 0;
+        $discount = 0;
+
+        // Insert into the sale_items table
+        foreach ($request->item_id as $index => $itemId) {
+            $itemTotal = $request->qty[$index] * $request->rate[$index] - $request->discount[$index];
+            $total += $itemTotal;
+            $discount += $request->discount[$index];
+
+            Invoice_items::create([
+                'type' => 'credit',
+                'tr_no' => $sale->id,
+                'invoice_no' => $sale->sale_no,
+                'invoice_type' => 'sale',
+                'item_id' => $itemId,
+                'item_no' => $request->item_number[$index],
+                'item_desc' => 'item description',
+                'item_desc2' => 'item description 2',
+                'item_unit' => 'pcs',
+                'sale_rate' => $request->rate[$index],
+                'purchase_rate' => 0,
+                'pur_rate_on_sale' => 0,
+                'discount_amount' => $request->discount[$index],
+                'tax_amount' => 0,
+                'debit_qty' => 0,
+                'credit_qty' => $request->qty[$index],
+                'account_no' => $sale->account_no,
+                'account_des' => $sale->account_desc,
+                'item_location' => 'location',
+                'tax_per' => 0,
+            ]);
+        }
+
+        // Update the total, discount, and vat_amount in the sale record
+        $sale->update([
+            'total' => $total,
+            'discount' => $discount,
+        ]);
+
+        return response()->json(['status' => true, 'message' => 'Sale created successfully.']);
     }
+
 
     /**
      * Display the specified resource.
