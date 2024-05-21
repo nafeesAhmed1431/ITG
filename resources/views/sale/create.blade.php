@@ -37,14 +37,14 @@
                             <div class="form-group">
                                 <label for="sale_customer">Customer <span class="text-danger">*</span> </label>
                                 <select name="sale_customer" id="sale_customer" class="form-select" required></select>
-                                <input type="hidden" name="sale_customer_name">
+                                <input type="hidden" id="sale_customer_name" name="sale_customer_name">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="sale_account">Account <span class="text-danger">*</span> </label>
                                 <select name="sale_account" id="sale_account" class="form-select" required></select>
-                                <input type="hidden" name="sale_account_name">
+                                <input type="hidden" id="sale_account_name" name="sale_account_name">
                             </div>
                         </div>
                     </div>
@@ -103,9 +103,10 @@
                             </div>
                         </div>
                     </div>
+                    <hr>
                     <div class="row mb-5">
                         <div class="col-12">
-                            <table class="expandable-table table" id="sale_product_table">
+                            <table class="table" id="sale_product_table">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -167,7 +168,8 @@
 
     function append_customer(e) {
         let data = e.params.data;
-        $('input[name="sale_customer_name"]').val(data.name);
+        console.log(data);
+        $('#sale_customer_name').val(data.text);
     }
 
     $('#sale_account').select2({
@@ -199,7 +201,8 @@
 
     function append_account(e) {
         let data = e.params.data;
-        $('input[name="sale_account_name"]').val(data.name);
+        console.log(data);
+        $('#sale_account_name').val(data.text);
     }
 
     $('#search_product').select2({
@@ -244,6 +247,7 @@
         $('#sale_product_rate').val(data.sale_rate);
         $('#sale_product_unit').val(data.unit);
         $('#sale_product_number').val(data.number);
+        $('#sale_product_id').val(data.id);
     }
 
     function calc_product_total(e) {
@@ -278,14 +282,18 @@
     }
 
     $(document).on('click', '#sale_product_add', function() {
+
         let id = $('#sale_product_id').val();
         let name = $('#sale_product_name').val();
+        let number = $('#sale_product_number').val();
         let description = $('#sale_product_description').val();
         let quantity = $('#sale_product_quantity').val();
+        let discount = $('#sale_product_discount').val();
         let unit = $('#sale_product_unit').val();
-        let rate = $('#sale_product_rate').val();
+        let sale_rate = $('#sale_product_rate').val();
         let disc = $('#sale_product_discount').val();
         let total = $('#sale_product_total').val();
+
         $(`#sale_product_table tbody`).append(
             `<tr>
                 <input type="hidden" name="item_id[]" value="${id}">     
@@ -296,13 +304,26 @@
                 <td>${unit}</td>
                 <td><input type="number" name="qty[]" class="form-control" value="${quantity}" readonly></td>
                 <td><input type="number" name="rate[]" class="form-control" value="${sale_rate}" readonly></td>
+                <td><input type="number" name="discount[]" class="form-control" value="${discount}" readonly></td>
                 <td><input type="number" name="total[]" class="form-control" value="${total}" readonly></td>
                 <td class="remove_row" ><span class="text-danger display-5"><i class="fa fa-times"></i></span></td>
             </tr>`
         );
+
+        reset_product_fields();
     });
 
-
+    function reset_product_fields() {
+        $('#sale_product_name').val('');
+        $('#sale_product_description').val('');
+        $('#sale_product_quantity').val('');
+        $('#sale_product_unit').val('');
+        $('#sale_product_rate').val('');
+        $('#sale_product_unit').val('');
+        $('#sale_product_discount').val('');
+        $('#sale_product_number').val('');
+        $('#sale_product_total').val('');
+    }
 
     function calc_row_total(e) {
         let row = $(e).closest('tr');
@@ -320,6 +341,19 @@
 
     $('#product_form').on('submit', function(e) {
         e.preventDefault();
+        $.ajax({
+            headers: {
+                'X-CSRF-Token': csrf
+            },
+            url: "{{route('sale.store')}}",
+            dataType: 'json',
+            method: 'POST',
+            processData: false,
+            contentType: false,
+            data: new FormData(this),
+            success: res => {},
+            error: res => {}
+        });
     });
 </script>
 @endsection
