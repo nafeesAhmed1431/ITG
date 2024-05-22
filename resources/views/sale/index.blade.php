@@ -33,7 +33,11 @@
                                 <td>{{$sale->created_at}}</td>
                                 <td>{{$sale->total}}</td>
                                 <td>Admin</td>
-                                <td>Actions</td>
+                                <td>
+                                    <a href="{{ route('sale.show', ['sale' => $sale->id]) }}"><span class="badge bg-info"><i class="fa fa-eye"></i> View</span></a>
+                                    <a href="{{ route('sale.edit', ['sale' => $sale->id]) }}"><span class="badge bg-primary"><i class="fa fa-pencil"></i> Edit</span></a>
+                                    <a href="{{ route('sale.delete', ['id' => $sale->id]) }}"><span class="badge bg-danger"><i class="fa fa-trash"></i> Delete</span></a>
+                                </td>
                             </tr>
                             @empty
                             <tr>

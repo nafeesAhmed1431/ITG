@@ -30,17 +30,14 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate the request data here
-
-        // Insert into the sales table
+        // Create the Sale
         $sale = Sale::create([
             'sale_no' => $request->sale_number,
             'account_no' => $request->sale_account,
             'account_desc' => $request->sale_account_name,
-            'sale_account_no' => $request->sale_account,
-            'total' => 0, // Initially 0, will be calculated later
-            'discount' => 0, // Initially 0, will be calculated later
-            'vat_amount' => 0, // Initially 0, will be calculated later
+            'total' => 0,
+            'discount' => 0,
+            'vat_amount' => 0,
             'customer_id' => $request->sale_customer,
             'customer_name' => $request->sale_customer_name,
             'created_by' => 1
@@ -49,13 +46,20 @@ class SaleController extends Controller
         $total = 0;
         $discount = 0;
 
-        // Insert into the sale_items table
+        // Insert into the invoice_items table
         foreach ($request->item_id as $index => $itemId) {
-            $itemTotal = $request->qty[$index] * $request->rate[$index] - $request->discount[$index];
-            $total += $itemTotal;
-            $discount += $request->discount[$index];
+
+            $sub_total = $request->qty[$index] * $request->rate[$index];
+
+            $discount_amount = (($request->discount[$index] / 100) * $sub_total);
+
+            $discount += $discount_amount;
+
+            $total += $sub_total - $discount_amount;
 
             Invoice_items::create([
+                'invoiceable_id' => $sale->id,
+                'invoiceable_type' => Sale::class,
                 'type' => 'credit',
                 'tr_no' => $sale->id,
                 'invoice_no' => $sale->sale_no,
@@ -89,20 +93,25 @@ class SaleController extends Controller
     }
 
 
+
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Sale $sale)
     {
-        //
+        $sale->load('invoiceItems', 'customer', 'account');
+        return view('sale.show', compact('sale'));
     }
+
+
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        //
+        echo 'reached';
+        exit;
     }
 
     /**
@@ -118,6 +127,8 @@ class SaleController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $sale = Sale::findOrFail($id);
+        $sale->delete();
+        return redirect()->route('sale.index')->with('success', 'Sale Deleted Successfully');
     }
 }

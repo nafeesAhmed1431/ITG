@@ -9,6 +9,8 @@ class Invoice_items extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'invoiceable_id',
+        'invoiceable_type',
         'type',
         'tr_no',
         'invoice_no',
@@ -30,4 +32,9 @@ class Invoice_items extends Model
         'item_location',
         'tax_per',
     ];
+
+    public function invoiceable()
+    {
+        return $this->morphTo();
+    }
 }

@@ -12,6 +12,13 @@
                 <p class="card-description"><span class="text-danger">*</span> Fields are required</p>
                 <form id="product_form">
                     @csrf
+                    <div class="d-none">
+                        <input type="hidden" id="sale_account_name" name="sale_account_name">
+                        <input type="hidden" id="sale_customer_name" name="sale_customer_name">
+                        <input type="hidden" id="sale_product_id" name="sale_product_id">
+                        <input type="hidden" id="sale_product_number" name="sale_product_number">
+                        <input type="hidden" id="sale_product_unit" name="sale_product_unit">
+                    </div>
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
@@ -37,14 +44,12 @@
                             <div class="form-group">
                                 <label for="sale_customer">Customer <span class="text-danger">*</span> </label>
                                 <select name="sale_customer" id="sale_customer" class="form-select" required></select>
-                                <input type="hidden" id="sale_customer_name" name="sale_customer_name">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="sale_account">Account <span class="text-danger">*</span> </label>
                                 <select name="sale_account" id="sale_account" class="form-select" required></select>
-                                <input type="hidden" id="sale_account_name" name="sale_account_name">
                             </div>
                         </div>
                     </div>
@@ -61,8 +66,6 @@
                             <div class="form-group">
                                 <label for="sale_product_name">Name<span class="text-danger">*</span> </label>
                                 <input type="text" id="sale_product_name" class="form-control" readonly>
-                                <input type="hidden" id="sale_product_id">
-                                <input type="hidden" id="sale_product_number">
                             </div>
                         </div>
                         <div class="col-2">
@@ -75,7 +78,6 @@
                             <div class="form-group">
                                 <label for="sale_product_quantity">Qty<span class="text-danger">*</span> </label>
                                 <input type="number" onkeyup="calc_product_total(this)" id="sale_product_quantity" class="form-control">
-                                <input type="hidden" id="sale_product_unit">
                             </div>
                         </div>
                         <div class="col-2">

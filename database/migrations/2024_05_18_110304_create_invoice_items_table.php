@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('invoice_items', function (Blueprint $table) {
             $table->id();
-            $table->enum('type', ['debit', 'credit']); 
+            $table->enum('type', ['debit', 'credit']);
             $table->integer('tr_no');
             $table->string('invoice_no', 10);
-            $table->enum('invoice_type',['sale','purchase','sale_return','purchase_return']);
-            $table->integer('item_id');
+            $table->enum('invoice_type', ['sale', 'purchase', 'sale_return', 'purchase_return']);
+            $table->unsignedBigInteger('item_id');
             $table->string('item_no', 20);
             $table->string('item_desc', 200);
             $table->string('item_desc2', 250);
@@ -29,10 +29,17 @@ return new class extends Migration
             $table->float('tax_amount')->default(0);
             $table->float('debit_qty')->default(0);
             $table->float('credit_qty')->default(0);
-            $table->integer('account_no');
+            $table->unsignedBigInteger('account_no');
             $table->string('account_des', 100);
             $table->string('item_location', 15);
             $table->float('tax_per');
+
+            $table->foreign('item_id')->on('products')->references('id')->onDelete('cascade');
+            $table->foreign('account_no')->on('accounts')->references('id')->onDelete('cascade');
+
+            $table->unsignedBigInteger('invoiceable_id');
+            $table->string('invoiceable_type');
+
             $table->timestamps();
         });
     }

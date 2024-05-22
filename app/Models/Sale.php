@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Invoice_items;
+
 
 class Sale extends Model
 {
@@ -21,4 +23,19 @@ class Sale extends Model
         'customer_name',
         'created_by',
     ];
+
+    public function invoiceItems()
+    {
+        return $this->morphMany(Invoice_items::class, 'invoiceable');
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(User::class,'customer_id');
+    }
+
+    public function account()
+    {
+        return $this->belongsTo(Account::class, 'account_no');
+    }
 }
