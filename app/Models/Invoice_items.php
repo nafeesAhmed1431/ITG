@@ -37,4 +37,9 @@ class Invoice_items extends Model
     {
         return $this->morphTo();
     }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'item_id');
+    }
 }

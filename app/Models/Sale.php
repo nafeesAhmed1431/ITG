@@ -26,16 +26,21 @@ class Sale extends Model
 
     public function invoiceItems()
     {
-        return $this->morphMany(Invoice_items::class, 'invoiceable');
+        return $this->hasMany(Invoice_items::class);
     }
 
     public function customer()
     {
-        return $this->belongsTo(User::class,'customer_id');
+        return $this->belongsTo(Customer::class);
     }
 
     public function account()
     {
-        return $this->belongsTo(Account::class, 'account_no');
+        return $this->belongsTo(Account::class);
+    }
+
+    public function products()
+    {
+        return $this->hasManyThrough(Product::class, Invoice_items::class, 'invoice_id', 'id', 'id', 'item_id');
     }
 }

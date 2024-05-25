@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Invoice_items;
 use App\Models\Sale;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SaleController extends Controller
 {
@@ -110,8 +111,20 @@ class SaleController extends Controller
      */
     public function edit(string $id)
     {
-        echo 'reached';
-        exit;
+        $sale = DB::table('sales')
+            ->select('sales.*', 'customer.*','customer.name as customer_name', 'account.*')
+            ->join('users as customer', 'customer.id', '=', 'sales.customer_id')
+            ->join('accounts as account', 'account.id', '=', 'sales.account_no')
+            ->where('sales.id', $id)
+            ->first();
+
+        $items = DB::table('invoice_items')
+            ->select('invoice_items.*', 'products.*')
+            ->join('products', 'products.id', '=', 'invoice_items.item_id')
+            ->where(['invoice_items.invoiceable_id' => $id, 'invoice_items.invoiceable_type' => Sale::class])
+            ->get();
+
+        return view('sale.edit', compact('sale', 'items'));
     }
 
     /**

@@ -25,7 +25,7 @@ Route::prefix('/sale')->group(function () {
     Route::get('/create', [SaleController::class, 'create'])->name('sale.create');
     Route::post('/store', [SaleController::class, 'store'])->name('sale.store');
     Route::get('/{sale}', [SaleController::class, 'show'])->name('sale.show');
-    Route::get('edit/{sale}', [SaleController::class, 'edit'])->name('sale.edit');
+    Route::get('edit/{id}', [SaleController::class, 'edit'])->name('sale.edit');
     Route::get('/{id}/delete', [SaleController::class, 'destroy'])->name('sale.delete');
     Route::get('/return', [SaleController::class, 'return'])->name('sale.return');
 });
